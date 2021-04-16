@@ -2,20 +2,17 @@ import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
 import LinearWithValueLabel from "../ManageHome/home";
 
-export default class Vpanel extends Component {
+export default class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-     
-<<<<<<< HEAD
-      plants:[]
-=======
-     plants:[]
->>>>>>> 726047a471406c3d0d69702ab7077bca9a6ebf6d
+      curTime : new Date().toLocaleString()
+      
     };
   }
 
- 
+  componentDidMount() {
+  }
 
   render() {
     
@@ -23,14 +20,16 @@ export default class Vpanel extends Component {
     
       
         <section className="section-dashboard__main" >
-          <Switch>
+          
             <Route
               path="/">
                
             
-            <LinearWithValueLabel></LinearWithValueLabel>
+            <LinearWithValueLabel
+           
+            ></LinearWithValueLabel>
             </Route>
-        </Switch> 
+         
         
         
       

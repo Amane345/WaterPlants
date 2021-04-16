@@ -13,6 +13,7 @@ import plant3 from "../../Images/plant3.png";
 import plant4 from "../../Images/plant4.png";
 import plant5 from "../../Images/plant1.png";
 import plant6 from "../../Images/plant6.png";
+import {UpdatelastWatered, getplant} from "../ManageHome/PlantDB";
 
 function LinearProgressWithLabel(props) {
   return (
@@ -44,7 +45,7 @@ const useStyles = makeStyles({
 });
 
 export default function LinearWithValueLabel() {
-  const classes = useStyles();
+
   const [selected, setSelected]=React.useState();
   const [progress, setProgress] = React.useState(0);
   const [progress1, setProgress1] = React.useState(0);
@@ -52,7 +53,7 @@ export default function LinearWithValueLabel() {
   const [progress3, setProgress3] = React.useState(0);
   const [progress4, setProgress4] = React.useState(0);
   const [progress5, setProgress5] = React.useState(0);
-  const [progress6, setProgress6] = React.useState(0);
+  
 
   const [waterDec, setWaterDec] = React.useState(100);
   const [waterDec1, setWaterDec1] = React.useState(100);
@@ -60,11 +61,12 @@ export default function LinearWithValueLabel() {
   const [waterDec3, setWaterDec3] = React.useState(100);
   const [waterDec4, setWaterDec4] = React.useState(100);
   const [waterDec5, setWaterDec5] = React.useState(100);
-  const [waterDec6, setWaterDec6] = React.useState(100);
+  
 
 
  
 const handleStart = (event,plantid) =>{
+
   if(plantid==0){
     setSelected(0);
     const interval1 = setInterval(() => {
@@ -73,6 +75,21 @@ const handleStart = (event,plantid) =>{
     const interval2 = setInterval(() => {
       setWaterDec((waterDec) => (waterDec <= 0 ? 0 : waterDec - 10));
     }, 3000);
+
+    // to update all plant last watered
+    for (let i = 1; i < 6; i++) {
+      UpdatelastWatered(i).then(response=> {
+        console.log(response);
+      });
+      // get the plant by id
+      getplant(i).then(response=> {
+        console.log(response);
+        // popup window to alert the user after 6 hour after I get the plant 
+        const timer = setTimeout(() => {
+          window.confirm(`please water plant ${i}, it has not been watered for 6 hours`)
+        }, 21600000);
+      });
+  }
    
     return () => {
       clearInterval(interval1);
@@ -90,13 +107,24 @@ if(plantid==1){
   const interval2 = setInterval(() => {
     setWaterDec1((waterDec1) => (waterDec1 <= 0 ? 0 : waterDec1 - 10));
   }, 3000);
-  const timer = setTimeout(() => {
-    window.confirm('please water plant1, it has not been watered for 6 hours')
-  }, 21600000);
+  //update the watered time
+ 
+  UpdatelastWatered(plantid).then(response=> {
+    console.log(response);
+  });
+  // get the plant by id
+  getplant(plantid).then(response=> {
+    console.log(response);
+    // popup window to alert the user after 6 hour after I get the plant 
+    const timer = setTimeout(() => {
+      window.confirm('please water plant1, it has not been watered for 6 hours')
+    }, 21600000);
+  });
+
   return () => {
     clearInterval(interval1);
     clearInterval(interval2);
-    clearTimeout(timer);
+    
   };   
 }
 
@@ -108,13 +136,23 @@ if(plantid==2){
   const interval2 = setInterval(() => {
     setWaterDec2((waterDec2) => (waterDec2 <= 0 ? 0 : waterDec2 - 10));
   }, 3000);
+
+   //update the watered time
+ 
+   UpdatelastWatered(plantid).then(response=> {
+    console.log(response);
+  });
+  getplant(plantid).then(response=> {
+    console.log(response);
+    // popup window to alert the user after 6 hour after I get the plant
   const timer = setTimeout(() => {
     window.confirm('please water plant2, it has not been watered for 6 hours')
   }, 21600000);
+});
   return () => {
     clearInterval(interval1);
     clearInterval(interval2);
-    clearTimeout(timer);
+   
   };   
 }
 
@@ -126,13 +164,22 @@ if(plantid==3){
   const interval2 = setInterval(() => {
     setWaterDec3((waterDec3) => (waterDec3 <= 0 ? 0 : waterDec3 - 10));
   }, 3000);
+   //update the watered time
+ 
+   UpdatelastWatered(plantid).then(response=> {
+    console.log(response);
+  });
+  getplant(plantid).then(response=> {
+    console.log(response);
+    // popup window to alert the user after 6 hour after I get the plant
   const timer = setTimeout(() => {
     window.confirm('please water plant3, it has not been watered for 6 hours')
   }, 21600000);
+});
   return () => {
     clearInterval(interval1);
     clearInterval(interval2);
-    clearTimeout(timer);
+    
   };   
 }
 
@@ -144,13 +191,22 @@ if(plantid==4){
   const interval2 = setInterval(() => {
     setWaterDec4((waterDec4) => (waterDec4 <= 0 ? 0 : waterDec4 - 10));
   }, 3000);
+   //update the watered time
+ 
+   UpdatelastWatered(plantid).then(response=> {
+    console.log(response);
+  });
+  getplant(plantid).then(response=> {
+    console.log(response);
+    // popup window to alert the user after 6 hour after I get the plant
   const timer = setTimeout(() => {
     window.confirm('please water plant4, it has not been watered for 6 hours')
   }, 21600000);
+});
   return () => {
     clearInterval(interval1);
     clearInterval(interval2);
-    clearTimeout(timer);
+    
   };   
 }
 
@@ -162,36 +218,29 @@ if(plantid==5){
   const interval2 = setInterval(() => {
     setWaterDec5((waterDec5) => (waterDec5 <= 0 ? 0 : waterDec5 - 10));
   }, 3000);
+   //update the watered time
+ 
+   UpdatelastWatered(plantid).then(response=> {
+    console.log(response);
+  });
+  getplant(plantid).then(response=> {
+    console.log(response);
+    // popup window to alert the user after 6 hour after I get the plant
   const timer = setTimeout(() => {
     window.confirm('please water plant5, it has not been watered for 6 hours')
   }, 21600000);
+});
   return () => {
     clearInterval(interval1);
     clearInterval(interval2);
-    clearTimeout(timer);
+    
   };   
 }
-
-if(plantid==6){
-  setSelected(6);
-  const interval1 = setInterval(() => {
-    setProgress6((progress6) => (progress6 >= 100 ?  waterDec6 : progress6 + 10));
-  }, 1000);
-  const interval2 = setInterval(() => {
-    setWaterDec6((waterDec6) => (waterDec6 <= 0 ? 0 : waterDec6 - 10));
-  }, 3000);
-  const timer = setTimeout(() => {
-    window.confirm('please water plant6, it has not been watered for 6 hours')
-  }, 21600000);
-  return () => {
-    clearInterval(interval1);
-    clearInterval(interval2);
-    clearTimeout(timer);
-  };   
-}
+ 
 };
-const handleStop = (event,plantid)=>{
 
+const handleStop = (event,plantid)=>{
+  
 };
 
 
@@ -333,7 +382,7 @@ const handleStop = (event,plantid)=>{
              <div className="col-1-of-2">
              </div>
              </div>
-             <img src={plant5} style={{width:150,height:200}}></img>
+             <img src={plant6} style={{width:150,height:200}}></img>
              <p>plant5</p>
              <LinearProgressWithLabel selected={5} value={ selected==5 ? progress5 && waterDec5: progress && waterDec} />
              
@@ -342,29 +391,7 @@ const handleStop = (event,plantid)=>{
 
 
 
-             <div className="col-1-of-3">
-             <div className="feature-box u-center-text ">
-             <div className="row">
-             <div className="col-1-of-2">
-                <a onClick={event => handleStart(event,6)}><img src={strt} style={{width:40,height:40}}></img></a>
-             </div>
-             <div className="col-1-of-2">
-                <a onClick={event => handleStop(event,6)}><img src={stp} style={{width:40,height:40}}></img></a>
-             </div>
-             </div>
-             <div className="row">
-             <div className="col-1-of-2">
-                <img src={can} style={{width:80,height:80}}></img>
-             </div>
-             <div className="col-1-of-2">
-             </div>
-             </div>
-             <img src={plant6} style={{width:200,height:200}}></img>
-             <p>plant6</p>
-             <LinearProgressWithLabel selected={6} value={ selected==6 ? progress6 && waterDec6: progress && waterDec} />
             
-             </div>
-             </div>
            </div>
 
         </React.Fragment>
